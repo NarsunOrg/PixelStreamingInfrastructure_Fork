@@ -227,7 +227,7 @@ function setup_frontend() {
 	# If player.html doesn't exist, or --build passed as arg, rebuild the frontend
     echo Testing ${WEBPACK_OUTPUT_PATH}
 	if [ ! -d "${WEBPACK_OUTPUT_PATH}" ] || [ "$BUILD_FRONTEND" == "1" ] ; then
-		echo "Building Typescript Frontend."
+		echo "Building React Frontend."
 		# Using our bundled NodeJS, build the web frontend files
         pushd "${SCRIPT_DIR}/../../../Common" > /dev/null
 		npm run build:esm
@@ -238,7 +238,7 @@ function setup_frontend() {
 		pushd "${SCRIPT_DIR}/../../../Frontend/ui-library" > /dev/null
 		npm run build:esm
 		popd > /dev/null
-		pushd "${SCRIPT_DIR}/../../../Frontend/implementations/typescript" > /dev/null
+		pushd "${SCRIPT_DIR}/../../../Frontend/implementations/react" > /dev/null
 		npm run build:dev
 		popd > /dev/null
 	else

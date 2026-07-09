@@ -62,9 +62,8 @@ module.exports = {
       // Output to a local dist/ rather than SignallingWebServer/www so this build
       // doesn't clobber the TypeScript reference frontend that Wilbur serves by default.
       // To have Wilbur serve this bundle, point it at dist/ via --http_root.
-      path: process.env.WEBPACK_OUTPUT_PATH
-          ? path.resolve(process.env.WEBPACK_OUTPUT_PATH)
-          : path.resolve(__dirname, './dist'),
+//      path: process.env.WEBPACK_OUTPUT_PATH ? path.resolve(process.env.WEBPACK_OUTPUT_PATH) : path.resolve(__dirname, './dist'),
+	  path: process.env.WEBPACK_OUTPUT_PATH ? path.resolve(process.env.WEBPACK_OUTPUT_PATH) : path.resolve(__dirname, '../../../SignallingWebServer/www'),
       clean: true,
       globalObject: 'this',
       hashFunction: 'xxhash64',

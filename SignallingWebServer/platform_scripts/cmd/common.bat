@@ -222,7 +222,7 @@ IF NOT exist "%FRONTEND_DIR%" (
 IF "%BUILD_FRONTEND%"=="1" (
     rem We could replace this all with a single npm script that does all this. we do have several build-all scripts already
     rem but this does give a good reference about the dependency chain for all of this.
-    echo Building Typescript frontend...
+    echo Building React frontend...
     pushd %CD%\Common
     call %NPM% run build:esm
     popd
@@ -232,7 +232,7 @@ IF "%BUILD_FRONTEND%"=="1" (
     pushd %CD%\Frontend\ui-library
     call %NPM% run build:esm
     popd
-    pushd %CD%\Frontend\implementations\typescript
+    pushd %CD%\Frontend\implementations\react
     rem Note: build:dev implicitly uses esm deps due to node16/bundler module resolution
     call %NPM% run build:dev
     popd
