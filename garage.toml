@@ -1,28 +1,22 @@
-# The directory where Garage will store its metadata (indices, etc.)
 metadata_dir = "/data/meta"
-
-# The directory where Garage will store the actual data blocks
 data_dir = "/data/data"
-
-# Database engine to use for metadata (sqlite is easiest for single-node)
 db_engine = "sqlite"
 
-# Internal RPC port for communication between Garage nodes
+# Replication must be 1 for a single-node setup
+replication_factor = 1
+
+# Internal RPC
 rpc_bind_addr = "[::]:3901"
-rpc_public_addr = "localhost:3901"
 rpc_secret = "f49de2bb8725f3bacf69b92b4a83582e6fbc53ed289da9f694c828efa9ad836d"
 
-replication_factor = 3
-consistency_mode = "consistent"
-
-
 [s3_api]
-api_bind_addr = "[::]:3900"
+api_bind_addr = "[::]:9000"
 s3_region = "us-east-1"
 
 [s3_web]
-bind_addr = "[::]:3901"
-root_domain = "localhost"
+bind_addr = "[::]:9001"
+root_domain = ".localhost"
 
 [admin]
-api_bind_addr = "[::]:3902"
+api_bind_addr = "[::]:3903"
+admin_token = "admin_secret_token"
