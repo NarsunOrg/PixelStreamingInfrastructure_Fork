@@ -113,17 +113,6 @@ program
         'Disconnect a player after this many milliseconds without a keepalive response. 0 = disabled',
         config_file.player_keepalive_timeout || '30000'
     )
-    .option('--serve', 'Enables the webserver on player_port.', config_file.serve ?? false)
-    .option(
-        '--http_root <path>',
-        'Sets the path for the webserver root.',
-        config_file.http_root || `${path.resolve(__dirname, '..', 'www')}`
-    )
-    .option(
-        '--homepage <filename>',
-        'The default html file to serve on the web server.',
-        config_file.homepage || 'player.html'
-    )
     .option('--https', 'Enables the webserver on https_port and enabling SSL', config_file.https || false)
     .addOption(
         new Option('--https_port <port>', 'Sets the listen port for the https server.')
@@ -279,14 +268,11 @@ const serverOpts: IServerConfig = {
     playerKeepaliveTimeout: Number(options.player_keepalive_timeout)
 };
 
-const shouldServerStart = options.serve || options.rest_api;
+const shouldServerStart = options.https || options.rest_api;
 if (shouldServerStart) {
-    const webserverOptions: IWebServerConfig = {
-        httpPort: options.player_port,
-        root: options.http_root,
-        homepageFile: options.homepage,
-        serveStatic: options.serve
-    };
+    const webserverOptions = {
+        httpPort: Number(options.player_port)
+    } as IWebServerConfig;
 
     if (options.cors) {
         const splitCsv = (value: unknown): string[] => {
@@ -306,13 +292,12 @@ if (shouldServerStart) {
         };
     }
 
-    if (options.serve) {
-        Logger.info('Static file serving enabled.');
-    } else if (options.rest_api) {
-        Logger.info('REST API enabled; static file serving disabled.');
+    if (options.rest_api) {
+        Logger.info('REST API enabled.');
     }
 
     if (options.https) {
+        Logger.info('HTTPS server enabled.');
         webserverOptions.httpsPort = options.https_port;
         const sslKeyPath = path.join(__dirname, '..', options.ssl_key_path);
         const sslCertPath = path.join(__dirname, '..', options.ssl_cert_path);

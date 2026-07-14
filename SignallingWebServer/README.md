@@ -1,6 +1,6 @@
 # Reference Signalling/Web Server (Wilbur)
 
-Wilbur is the reference signalling/web server that is shipped with the Pixel Streaming plugin. It is a small intermediary application that sits between streamers and other peers. It handles the initial connection negotiations and some other small ongoing control messages between peers, while also acting as a basic http web server to serve the [Frontend](/Frontend/README.md) web application.
+Wilbur is the reference signalling/web server that is shipped with the Pixel Streaming plugin. It is a small intermediary application that sits between streamers and other peers, handling the initial connection negotiations and control messages between peers. It can also expose optional HTTPS and REST API endpoints, but it no longer serves static frontend content directly.
 
 ## Building
 Building is handled by `npm` and `tsc`. However, the easiest method to install and build everything is to invoke:
@@ -52,9 +52,6 @@ Options:
   --max_players <number>        Sets the maximum number of subscribers per streamer. 0 = unlimited (default: "0")
   --player_keepalive_timeout <milliseconds>
                                 Disconnect a player after this many milliseconds without a keepalive response. 0 = disabled (default: "30000")
-  --serve                       Enables the webserver on player_port. (default: true)
-  --http_root <path>            Sets the path for the webserver root. (default: "D:\\PixelStreamingInfrastructure\\SignallingWebServer\\www")
-  --homepage <filename>         The default html file to serve on the web server. (default: "player.html")
   --https                       Enables the webserver on https_port and enabling SSL (default: false)
   --https_port <port>           Sets the listen port for the https server. (default: 443)
   --ssl_key_path <path>         Sets the path for the SSL key file. (default: "certificates/client-key.pem")
@@ -76,18 +73,16 @@ These CLI options can also be described in a `config.json` (default config file 
 	"streamer_port": "8888",
 	"player_port": "80",
 	"sfu_port": "8889",
-	"serve": true,
-	"http_root": "www",
-	"homepage": "player.html",
+	"https": true,
+	"rest_api": true,
 	"log_config": false,
 	"stdin": false
 }
 ```
-Given these options, to start the server with the closest behaviour as the old cirrus, you would invoke,
+Given these options, to start the server with HTTPS and REST API enabled, you would invoke,
 ```
-npm start -- --console_messages --https_redirect verbose --serve --log_config --http_root www --homepage player.html
+npm start -- --console_messages verbose --https --rest_api --log_config
 ```
-Note that `www` being used as the http root assumes your Frontend is in that directory.
 
 ## Development
 This implementation is built on the [Signalling](../Signalling) library which is supplied as a library for developing signalling applications. Visit its [documentation](../Signalling/docs) for more information.

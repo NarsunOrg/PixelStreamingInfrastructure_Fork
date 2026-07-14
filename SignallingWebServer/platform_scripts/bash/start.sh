@@ -18,7 +18,7 @@ for arg in "${TEST_ARGS[@]}"; do
     fi
 done
 
-SERVER_ARGS+=" --serve --https_redirect --console_messages verbose --log_config --public_ip=${PUBLIC_IP}"
+SERVER_ARGS+=" --https_redirect --console_messages verbose --log_config --public_ip=${PUBLIC_IP}"
 if [[ $SKIP_PEER_ARGS == false ]]; then
     if [[ ! -z "$STUN_SERVER" && ! -z "$TURN_SERVER" ]]; then
         PEER_OPTIONS="{\"iceServers\":[{\"urls\":[\"stun:${STUN_SERVER}\",\"turn:${TURN_SERVER}\"],\"username\":\"${TURN_USER}\",\"credential\":\"${TURN_PASS}\"}]}"
@@ -31,10 +31,6 @@ fi
 if [[ ! -z "$PEER_OPTIONS" ]]; then
     SERVER_ARGS+=" --peer_options='${PEER_OPTIONS}'"
 fi
-if [[ ! -z "$FRONTEND_DIR" ]]; then
-    SERVER_ARGS+=" --http_root='$FRONTEND_DIR'"
-fi
-
 build_wilbur
 print_config
 start_wilbur

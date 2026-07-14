@@ -16,7 +16,7 @@ call :SetPublicIP
 call :SetupTurnStun bg
 
 set PEER_OPTIONS=
-set SERVER_ARGS=!SERVER_ARGS! --serve --console_messages verbose --https_redirect --log_config --public_ip=!PUBLIC_IP!
+set SERVER_ARGS=!SERVER_ARGS! --console_messages verbose --https_redirect --log_config --public_ip=!PUBLIC_IP!
 IF NOT "!STUN_SERVER!"=="" (
 	IF NOT "!TURN_SERVER!"=="" (
 		set PEER_OPTIONS={\"iceServers\":[{\"urls\":[\"stun:!STUN_SERVER!\",\"turn:!TURN_SERVER!\"],\"username\":\"!TURN_USER!\",\"credential\":\"!TURN_PASS!\"}]}
@@ -34,17 +34,6 @@ if !errorlevel! == 0 (
 IF NOT "!PEER_OPTIONS_SUPPLIED!"=="true" (
 	IF NOT "!PEER_OPTIONS!"=="" (
 		set SERVER_ARGS=!SERVER_ARGS! --peer_options="!PEER_OPTIONS!"
-	)
-)
-
-
-echo !SERVER_ARGS! | findstr /C:"--http_root" >nul
-if !errorlevel! == 0 (
-	set HTTP_ROOT_SUPPLIED=true
-)
-IF NOT "!HTTP_ROOT_SUPPLIED!"=="true" (
-	IF NOT "!FRONTEND_DIR!"=="" (
-		set SERVER_ARGS=!SERVER_ARGS! --http_root="!FRONTEND_DIR!"
 	)
 )
 
