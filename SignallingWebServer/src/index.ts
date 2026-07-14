@@ -96,7 +96,7 @@ program
     .option(
         '--player_port <port>',
         'Sets the listening port for player connections.',
-        config_file.player_port || '80'
+        config_file.player_port || '3000'
     )
     .option(
         '--sfu_port <port>',
@@ -113,7 +113,7 @@ program
         'Disconnect a player after this many milliseconds without a keepalive response. 0 = disabled',
         config_file.player_keepalive_timeout || '30000'
     )
-    .option('--serve', 'Enables the webserver on player_port.', config_file.serve || false)
+    .option('--serve', 'Enables the webserver on player_port.', config_file.serve ?? false)
     .option(
         '--http_root <path>',
         'Sets the path for the webserver root.',
