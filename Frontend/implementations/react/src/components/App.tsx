@@ -15,7 +15,7 @@ export const App = () => {
                 initialSettings={{
                     AutoPlayVideo: true,
                     AutoConnect: true,
-                    ss: 'ws://localhost:80',
+                    ss: 'ws://localhost:3000',
                     StartVideoMuted: true,
                     HoveringMouse: true,
                     WaitForStreamer: true
